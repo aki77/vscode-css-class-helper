@@ -19,15 +19,15 @@
       "type": "object",
       "title": "CSS Class Helper",
       "properties": {
-        "cssClassHelper.includeGrobPattern": {
+        "cssClassHelper.includeGlobPattern": {
           "type": "string",
           "default": "**/*.{css,scss}",
-          "description": "List of grob patterns to find css files."
+          "description": "List of glob patterns to find css files."
         },
-        "cssClassHelper.excludeGrobPattern": {
+        "cssClassHelper.excludeGlobPattern": {
           "type": "string",
           "default": "{node_modules,vendor}/**",
-          "description": "List of grob patterns to exclude css files."
+          "description": "List of glob patterns to exclude css files."
         }
       }
     }

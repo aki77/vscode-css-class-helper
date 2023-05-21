@@ -6,20 +6,21 @@ import { ClassNameDefinitionProvider } from './ClassNameDefinitionProvider'
 export async function activate(context: vscode.ExtensionContext) {
   const classNameManager = new ClassNameManager()
 
-  const config = vscode.workspace.getConfiguration('myExtension')
+  const config = vscode.workspace.getConfiguration('cssClassHelper')
   const includeGlobPattern = config.get<string>(
-    'cssClassHelper.includeGlobPattern',
+    'includeGlobPattern',
     '**/*.{css,scss}'
   )
   const excludeGlobPattern = config.get<string>(
-    'cssClassHelper.excludeGlobPattern',
+    'excludeGlobPattern',
     '{node_modules,vendor}/**'
   )
+
   const cssFiles = await vscode.workspace.findFiles(
     includeGlobPattern,
     excludeGlobPattern
   )
-  console.log('Found cssFiles', cssFiles)
+  console.log('Found cssFiles', cssFiles, includeGlobPattern)
   for (const cssFile of cssFiles) {
     classNameManager.processCssFile(cssFile.fsPath)
   }
