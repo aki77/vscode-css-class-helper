@@ -2,18 +2,25 @@ import * as vscode from 'vscode'
 import type { ClassNameManager } from './ClassNameManager'
 
 const CLASS_ATTRIBUTE_REGEX = /class=["'](.*)["']/
+const EMMET_REGEX = /\.[\w-_]+/
 
 export class ClassNameCompletionProvider
   implements vscode.CompletionItemProvider
 {
-  constructor(private classNameManager: ClassNameManager) {}
+  constructor(
+    private classNameManager: ClassNameManager,
+    private enableEmmetCompletion: boolean
+  ) {}
 
   provideCompletionItems(
     document: vscode.TextDocument,
     position: vscode.Position
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     const lineText = document.lineAt(position.line).text
-    if (!CLASS_ATTRIBUTE_REGEX.test(lineText)) {
+    if (
+      !CLASS_ATTRIBUTE_REGEX.test(lineText) &&
+      (!this.enableEmmetCompletion || !EMMET_REGEX.test(lineText))
+    ) {
       return
     }
 

@@ -28,6 +28,11 @@
           "type": "string",
           "default": "{node_modules,vendor}/**",
           "description": "List of glob patterns to exclude css files."
+        },
+        "cssClassHelper.enableEmmetCompletion": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable emmet completion."
         }
       }
     }

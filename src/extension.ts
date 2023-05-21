@@ -15,6 +15,10 @@ export async function activate(context: vscode.ExtensionContext) {
     'excludeGlobPattern',
     '{node_modules,vendor}/**'
   )
+  const enableEmmetCompletion = config.get<boolean>(
+    'enableEmmetCompletion',
+    true
+  )
 
   const cssFiles = await vscode.workspace.findFiles(
     includeGlobPattern,
@@ -25,9 +29,16 @@ export async function activate(context: vscode.ExtensionContext) {
     classNameManager.processCssFile(cssFile.fsPath)
   }
 
-  const completionProvider = new ClassNameCompletionProvider(classNameManager)
+  const completionProvider = new ClassNameCompletionProvider(
+    classNameManager,
+    enableEmmetCompletion
+  )
   context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider('html', completionProvider)
+    vscode.languages.registerCompletionItemProvider(
+      'html',
+      completionProvider,
+      ...(enableEmmetCompletion ? ['.'] : [])
+    )
   )
 
   const definitionProvider = new ClassNameDefinitionProvider(classNameManager)
