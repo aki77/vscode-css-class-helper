@@ -1,0 +1,14 @@
+.test-class-1 {
+  color: red;
+  font-size: 16px;
+}
+
+.test-class-2 {
+  background-color: blue;
+  padding: 10px;
+}
+
+body .test-class-3, .test-class-4 {
+  border: 1px solid black;
+  margin: 20px;
+}

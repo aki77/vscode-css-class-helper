@@ -1,0 +1,61 @@
+{
+  "name": "css-class-helper",
+  "displayName": "CSS Class Helper",
+  "description": "CSS Class Autocomplete with Definition Jump",
+  "version": "0.1.0",
+  "publisher": "aki77",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/*.{css,scss}"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "CSS Class Helper",
+      "properties": {
+        "cssClassHelper.includeGrobPattern": {
+          "type": "string",
+          "default": "**/*.{css,scss}",
+          "description": "List of grob patterns to find css files."
+        },
+        "cssClassHelper.excludeGrobPattern": {
+          "type": "string",
+          "default": "{node_modules,vendor}/**",
+          "description": "List of grob patterns to exclude css files."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.78.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "@vscode/test-electron": "^2.3.0",
+    "eslint": "^8.39.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "postcss": "^8.4.23",
+    "postcss-scss": "^4.0.6",
+    "postcss-selector-parser": "^6.0.13"
+  }
+}
