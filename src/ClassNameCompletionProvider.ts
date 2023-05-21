@@ -1,7 +1,6 @@
 import * as vscode from 'vscode'
 import type { ClassNameManager } from './ClassNameManager'
 
-const CLASS_ATTRIBUTE_REGEX = /class=["'](.*)["']/
 const EMMET_REGEX = /\.[\w-_]+/
 
 export class ClassNameCompletionProvider
@@ -9,6 +8,7 @@ export class ClassNameCompletionProvider
 {
   constructor(
     private classNameManager: ClassNameManager,
+    private patterns: readonly RegExp[],
     private enableEmmetCompletion: boolean
   ) {}
 
@@ -16,9 +16,12 @@ export class ClassNameCompletionProvider
     document: vscode.TextDocument,
     position: vscode.Position
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-    const lineText = document.lineAt(position.line).text
+    const lineText = document.getText(
+      new vscode.Range(position.with({ character: 0 }), position)
+    )
+
     if (
-      !CLASS_ATTRIBUTE_REGEX.test(lineText) &&
+      !this.patterns.some((regex) => regex.test(lineText)) &&
       (!this.enableEmmetCompletion || !EMMET_REGEX.test(lineText))
     ) {
       return

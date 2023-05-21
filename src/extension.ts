@@ -19,6 +19,9 @@ export async function activate(context: vscode.ExtensionContext) {
     'enableEmmetCompletion',
     true
   )
+  const langClassAttributePatterns = config.get<
+    Record<string, readonly string[]>
+  >('langClassAttributePatterns', {})
 
   const cssFiles = await vscode.workspace.findFiles(
     includeGlobPattern,
@@ -26,25 +29,35 @@ export async function activate(context: vscode.ExtensionContext) {
   )
   console.log('Found cssFiles', cssFiles, includeGlobPattern)
   for (const cssFile of cssFiles) {
-    classNameManager.processCssFile(cssFile.fsPath)
+    setTimeout(() => {
+      classNameManager.processCssFile(cssFile.fsPath)
+    }, 0)
   }
 
-  const completionProvider = new ClassNameCompletionProvider(
-    classNameManager,
-    enableEmmetCompletion
-  )
-  context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider(
-      'html',
-      completionProvider,
-      ...(enableEmmetCompletion ? ['.'] : [])
-    )
-  )
+  for (const [lang, stringPatterns] of Object.entries(
+    langClassAttributePatterns
+  )) {
+    const patterns = stringPatterns.map((p) => new RegExp(p))
 
-  const definitionProvider = new ClassNameDefinitionProvider(classNameManager)
-  context.subscriptions.push(
-    vscode.languages.registerDefinitionProvider('html', definitionProvider)
-  )
+    context.subscriptions.push(
+      vscode.languages.registerCompletionItemProvider(
+        lang,
+        new ClassNameCompletionProvider(
+          classNameManager,
+          patterns,
+          enableEmmetCompletion
+        ),
+        ...(enableEmmetCompletion ? ['.'] : [])
+      )
+    )
+
+    context.subscriptions.push(
+      vscode.languages.registerDefinitionProvider(
+        lang,
+        new ClassNameDefinitionProvider(classNameManager, patterns)
+      )
+    )
+  }
 }
 
 // This method is called when your extension is deactivated

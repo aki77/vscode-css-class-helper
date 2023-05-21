@@ -33,6 +33,14 @@
           "type": "boolean",
           "default": true,
           "description": "Enable emmet completion."
+        },
+        "cssClassHelper.langClassAttributePatterns": {
+          "type": "object",
+          "default": {
+            "html": ["class=[\"'][^\"']+$"],
+            "haml": ["^\\s*%?(?:\\w+)?(?:\\.[\\w-_]+)+", "class:\\s*[\"'][^\"']+$"]
+          },
+          "description": "List of language id and class attribute patterns."
         }
       }
     }
