@@ -4,12 +4,21 @@
   "description": "CSS Class Autocomplete with Definition Jump",
   "version": "0.2.0",
   "publisher": "aki77",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.78.0"
   },
+  "license": "MIT",
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aki77/vscode-css-class-helper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aki77/vscode-css-class-helper/issues"
+  },
   "activationEvents": [
     "workspaceContains:**/*.{css,scss}"
   ],
