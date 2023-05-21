@@ -26,7 +26,7 @@
         },
         "cssClassHelper.excludeGlobPattern": {
           "type": "string",
-          "default": "{node_modules,vendor}/**",
+          "default": "{node_modules,vendor,tmp}/**",
           "description": "List of glob patterns to exclude css files."
         },
         "cssClassHelper.enableEmmetCompletion": {

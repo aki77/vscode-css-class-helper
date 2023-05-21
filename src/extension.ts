@@ -13,7 +13,7 @@ export async function activate(context: vscode.ExtensionContext) {
   )
   const excludeGlobPattern = config.get<string>(
     'excludeGlobPattern',
-    '{node_modules,vendor}/**'
+    '{node_modules,vendor,tmp}/**'
   )
   const enableEmmetCompletion = config.get<boolean>(
     'enableEmmetCompletion',
