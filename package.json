@@ -2,7 +2,7 @@
   "name": "css-class-helper",
   "displayName": "CSS Class Helper",
   "description": "CSS Class Autocomplete with Definition Jump",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "aki77",
   "engines": {
     "vscode": "^1.78.0"
@@ -37,8 +37,13 @@
         "cssClassHelper.langClassAttributePatterns": {
           "type": "object",
           "default": {
-            "html": ["class=[\"'][^\"']+$"],
-            "haml": ["^\\s*%?(?:\\w+)?(?:\\.[\\w-_]+)+", "class:\\s*[\"'][^\"']+$"]
+            "html": [
+              "class=[\"'][^\"']+$"
+            ],
+            "haml": [
+              "^\\s*%?(?:\\w+)?(?:\\.[\\w-_]+)+",
+              "class:\\s*[\"'][^\"']+$"
+            ]
           },
           "description": "List of language id and class attribute patterns."
         }
