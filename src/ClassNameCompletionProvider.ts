@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import type { ClassNameManager } from './ClassNameManager'
 
-const EMMET_REGEX = /\.[\w-_]+/
+const EMMET_REGEX = /^\s*(?:[\w-]+)(\.[\w-_]+)+/
 
 export class ClassNameCompletionProvider
   implements vscode.CompletionItemProvider

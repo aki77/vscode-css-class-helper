@@ -22,7 +22,7 @@ This extension contributes the following settings:
 ```json
 {
   "html": ["class=[\"'][^\"']+$"],
-  "haml": ["^\\s*%?(?:\\w+)?(?:\\.[\\w-_]+)+", "class:\\s*[\"'][^\"']+$"]
+  "haml": ["^\\s*%?(?:\\w+)?(?:\\.[\\w-_]+)+$", "class:\\s*[\"'][^\"']+$"]
 }
 ```
 
