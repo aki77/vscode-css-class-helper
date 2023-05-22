@@ -4,8 +4,6 @@ import { ClassNameManager } from './ClassNameManager'
 import { ClassNameDefinitionProvider } from './ClassNameDefinitionProvider'
 
 export async function activate(context: vscode.ExtensionContext) {
-  const classNameManager = new ClassNameManager()
-
   const config = vscode.workspace.getConfiguration('cssClassHelper')
   const includeGlobPattern = config.get<string>(
     'includeGlobPattern',
@@ -23,16 +21,20 @@ export async function activate(context: vscode.ExtensionContext) {
     Record<string, readonly string[]>
   >('langClassAttributePatterns', {})
 
-  const cssFiles = await vscode.workspace.findFiles(
+  const classNameManager = new ClassNameManager(
     includeGlobPattern,
     excludeGlobPattern
   )
-  console.log('Found cssFiles', cssFiles, includeGlobPattern)
-  for (const cssFile of cssFiles) {
-    setTimeout(() => {
-      classNameManager.processCssFile(cssFile.fsPath)
-    }, 0)
-  }
+
+  setTimeout(() => {
+    classNameManager.load()
+  }, 0)
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('cssClassHelper.reload', () => {
+      return classNameManager.reload()
+    })
+  )
 
   for (const [lang, stringPatterns] of Object.entries(
     langClassAttributePatterns

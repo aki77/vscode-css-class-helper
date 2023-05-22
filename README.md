@@ -26,6 +26,12 @@ This extension contributes the following settings:
 }
 ```
 
+## Commands
+
+This extension provides the following commands:
+
+- `cssClassHelper.reload`: Reloads the CSS class definitions.
+
 ## Supported CSS file formats
 
 - `.css`

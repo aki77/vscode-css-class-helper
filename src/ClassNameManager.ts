@@ -10,8 +10,33 @@ type FileLocation = `${string}:${number}`
 export class ClassNameManager {
   private classNameLocations: Map<string, Set<FileLocation>>
 
-  constructor() {
+  constructor(
+    private includeGlobPattern: string,
+    private excludeGlobPattern: string
+  ) {
     this.classNameLocations = new Map()
+  }
+
+  public async load() {
+    const cssFiles = await vscode.workspace.findFiles(
+      this.includeGlobPattern,
+      this.excludeGlobPattern
+    )
+    console.log(
+      'Found cssFiles',
+      cssFiles,
+      this.includeGlobPattern,
+      this.excludeGlobPattern
+    )
+    const promises = cssFiles.map((cssFile) =>
+      this.processCssFile(cssFile.fsPath)
+    )
+    return Promise.all(promises)
+  }
+
+  public async reload(): Promise<void> {
+    this.classNameLocations.clear()
+    await this.load()
   }
 
   public getClassNames(): string[] {
@@ -33,7 +58,7 @@ export class ClassNameManager {
     // Read the CSS file and extract class names
     const css = await fs.promises.readFile(cssFilePath, 'utf8')
 
-    postcss([postcssNested()])
+    return postcss([postcssNested()])
       .process(css, { from: cssFilePath, syntax: postcssScss })
       .then((result) => {
         result.root?.walkRules((rule) => {

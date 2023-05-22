@@ -7,12 +7,12 @@ import * as path from 'path'
 import { ClassNameManager } from '../../ClassNameManager'
 
 test('Should return empty array for default', () => {
-  const classNameManager = new ClassNameManager()
+  const classNameManager = new ClassNameManager('**/*.css', 'node_modules/**')
   assert.deepStrictEqual(classNameManager.getClassNames(), [])
 })
 
 test('Should return class names for css file', async () => {
-  const classNameManager = new ClassNameManager()
+  const classNameManager = new ClassNameManager('**/*.css', 'node_modules/**')
   await classNameManager.processCssFile('./src/test/test.css')
   assert.deepStrictEqual(classNameManager.getClassNames(), [
     'test-class-1',
@@ -23,7 +23,7 @@ test('Should return class names for css file', async () => {
 })
 
 test('Should return class names for scss file', async () => {
-  const classNameManager = new ClassNameManager()
+  const classNameManager = new ClassNameManager('**/*.css', 'node_modules/**')
   await classNameManager.processCssFile('./src/test/test.scss')
   assert.deepStrictEqual(classNameManager.getClassNames(), [
     'test-class-1',
@@ -35,7 +35,7 @@ test('Should return class names for scss file', async () => {
 })
 
 test('Should return locations for class name', async () => {
-  const classNameManager = new ClassNameManager()
+  const classNameManager = new ClassNameManager('**/*.css', 'node_modules/**')
   await classNameManager.processCssFile('./src/test/test.css')
   assert.deepStrictEqual(classNameManager.getClassLocations('test-class-4'), [
     new vscode.Location(
