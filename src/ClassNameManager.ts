@@ -1,6 +1,8 @@
 import * as vscode from 'vscode'
 import * as fs from 'fs'
-import { parse } from 'postcss-scss'
+import postcss from 'postcss'
+import * as postcssScss from 'postcss-scss'
+import * as postcssNested from 'postcss-nested'
 import * as createSelectorParser from 'postcss-selector-parser'
 
 type FileLocation = `${string}:${number}`
@@ -31,18 +33,22 @@ export class ClassNameManager {
     // Read the CSS file and extract class names
     const css = await fs.promises.readFile(cssFilePath, 'utf8')
 
-    parse(css, { from: cssFilePath }).walkRules((rule) => {
-      rule.selectors.forEach((selector) => {
-        const ast = createSelectorParser().astSync(selector)
-        ast.walkClasses((node) => {
-          const location: FileLocation | undefined = rule.source?.start
-            ? `${rule.source.input.file}:${rule.source.start.line - 1}`
-            : undefined
+    postcss([postcssNested()])
+      .process(css, { from: cssFilePath, syntax: postcssScss })
+      .then((result) => {
+        result.root?.walkRules((rule) => {
+          rule.selectors.forEach((selector) => {
+            const ast = createSelectorParser().astSync(selector)
+            ast.walkClasses((node) => {
+              const location: FileLocation | undefined = rule.source?.start
+                ? `${rule.source.input.file}:${rule.source.start.line - 1}`
+                : undefined
 
-          this.addClassLocation(node.value, location)
+              this.addClassLocation(node.value, location)
+            })
+          })
         })
       })
-    })
   }
 
   private addClassLocation(
