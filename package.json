@@ -24,6 +24,13 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "cssClassHelper.reload",
+        "title": "Reloads the CSS class definitions",
+        "category": "CSS Class Helper"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "CSS Class Helper",
