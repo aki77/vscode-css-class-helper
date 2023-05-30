@@ -2,7 +2,7 @@
   "name": "css-class-helper",
   "displayName": "CSS Class Helper",
   "description": "CSS Class Autocomplete with Definition Jump",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "publisher": "aki77",
   "icon": "images/icon.png",
   "engines": {
@@ -54,8 +54,12 @@
           "type": "object",
           "description": "List of language id and aliases.",
           "default": {
-            "html": ["vue"],
-            "haml": ["pug"]
+            "html": [
+              "vue"
+            ],
+            "haml": [
+              "pug"
+            ]
           }
         },
         "cssClassHelper.langClassAttributePatterns": {
