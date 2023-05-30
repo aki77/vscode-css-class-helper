@@ -20,6 +20,10 @@ export async function activate(context: vscode.ExtensionContext) {
   const langClassAttributePatterns = config.get<
     Record<string, readonly string[]>
   >('langClassAttributePatterns', {})
+  const langAliases = config.get<Record<string, readonly string[]>>(
+    'langAliases',
+    {}
+  )
 
   const classNameManager = new ClassNameManager(
     includeGlobPattern,
@@ -40,10 +44,11 @@ export async function activate(context: vscode.ExtensionContext) {
     langClassAttributePatterns
   )) {
     const patterns = stringPatterns.map((p) => new RegExp(p))
+    const selector = langAliases[lang] ? [lang, ...langAliases[lang]] : lang
 
     context.subscriptions.push(
       vscode.languages.registerCompletionItemProvider(
-        lang,
+        selector,
         new ClassNameCompletionProvider(
           classNameManager,
           patterns,
@@ -55,7 +60,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
       vscode.languages.registerDefinitionProvider(
-        lang,
+        selector,
         new ClassNameDefinitionProvider(classNameManager, patterns)
       )
     )
