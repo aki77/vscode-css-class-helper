@@ -19,12 +19,25 @@ This extension contributes the following settings:
 - `cssClassHelper.enableEmmetCompletion`: Enable emmet completion. (default: true)
 - `cssClassHelper.langClassAttributePatterns`: List of language id and class attribute patterns. (default: see below)
 
-```json
-{
-  "html": ["class=[\"'][^\"']+$"],
-  "haml": ["^\\s*%?(?:\\w+)?(?:\\.[\\w-_]+)+$", "class:\\s*[\"'][^\"']+$"]
-}
-```
+  ```json
+  {
+    "html": ["class=[\"'][^\"']+$"],
+    "haml": ["^\\s*%?(?:\\w+)?(?:\\.[\\w-_]+)+$", "class:\\s*[\"'][^\"']+$"]
+  }
+  ```
+
+- `cssClassHelper.langAliases`: List of language aliases. (default: see below)
+
+  The `langAliases` setting is used to specify aliases for language IDs. This is useful when you want to use a different language ID than the one provided by VSCode. For example, if you want to use the `vue` language ID instead of `html`, you can add the following to your settings:
+
+  ```json
+  {
+    "cssClassHelper.langAliases": {
+      "html": ["vue"],
+      "haml": ["pug"]
+    }
+  }
+  ```
 
 ## Commands
 

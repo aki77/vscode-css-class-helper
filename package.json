@@ -50,6 +50,14 @@
           "default": true,
           "description": "Enable emmet completion."
         },
+        "cssClassHelper.langAliases": {
+          "type": "object",
+          "description": "List of language id and aliases.",
+          "default": {
+            "html": ["vue"],
+            "haml": ["pug"]
+          }
+        },
         "cssClassHelper.langClassAttributePatterns": {
           "type": "object",
           "default": {
